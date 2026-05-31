@@ -24,9 +24,6 @@ public class User {
     @Column(name = "cpf", nullable = false, unique = true)
     private String CPF;
 
-    @Column(name = "documento", nullable = false, unique = true)
-    private String documento;
-
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
@@ -40,6 +37,7 @@ public class User {
     private String loginName;
 
     @Embedded
+    @Column(name = "endereco")
     private Address endereco;
 
 }

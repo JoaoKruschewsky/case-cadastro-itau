@@ -1,18 +1,16 @@
 package com.example.demo.adapter.in;
 
 
-import com.example.demo.domain.model.dtos.RegisterUserRequest;
-import com.example.demo.domain.model.dtos.ResponserUser;
+import com.example.demo.adapter.dto.RegisterUserRequest;
+import com.example.demo.adapter.dto.ResponserUser;
 import com.example.demo.domain.ports.in.ManagerUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("manager-controller/v1/manager")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class ManagerController {
 

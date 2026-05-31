@@ -1,7 +1,7 @@
 package com.example.demo.domain.ports.in;
 
-import com.example.demo.domain.model.dtos.RegisterUserRequest;
-import com.example.demo.domain.model.dtos.ResponserUser;
+import com.example.demo.adapter.dto.RegisterUserRequest;
+import com.example.demo.adapter.dto.ResponserUser;
 
 public interface ManagerUser {
 

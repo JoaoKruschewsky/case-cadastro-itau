@@ -1,6 +1,6 @@
 package com.example.demo.domain.ports.out;
 
-import com.example.demo.domain.model.dtos.RegisterUserRequest;
+import com.example.demo.adapter.dto.RegisterUserRequest;
 
 public interface H2Manager {
 
