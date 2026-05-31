@@ -2,6 +2,7 @@ package com.example.demo.adapter.in;
 
 
 import com.example.demo.domain.model.dtos.RegisterUserRequest;
+import com.example.demo.domain.model.dtos.ResponserUser;
 import com.example.demo.domain.ports.in.ManagerUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,9 @@ public class ManagerController {
     private final ManagerUser managerUser;
 
     @PostMapping(path = "register")
-    public ResponseEntity<?> registerUser(@RequestBody RegisterUserRequest request){
-        managerUser.registerUser(request);
+    public ResponseEntity<ResponserUser> registerUser(@RequestBody RegisterUserRequest request){
+        ResponserUser response = managerUser.registerUser(request);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(response);
     }
 }

@@ -33,7 +33,7 @@ public class User {
     private String cep;
 
     @OneToOne
-    @JoinColumn(name = "login_user", nullable = false)
+    @JoinColumn(name = "login_user")
     private Login login;
 
     @Embedded

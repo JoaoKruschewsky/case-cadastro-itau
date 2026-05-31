@@ -14,7 +14,7 @@ public class Login {
     private Long id;
 
 
-    @Column(name = "login", nullable = false, unique = true)
+    @Column(name = "login", unique = true)
     private String login;
 
 }

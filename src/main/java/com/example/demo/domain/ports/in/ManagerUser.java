@@ -1,10 +1,11 @@
 package com.example.demo.domain.ports.in;
 
 import com.example.demo.domain.model.dtos.RegisterUserRequest;
+import com.example.demo.domain.model.dtos.ResponserUser;
 
 public interface ManagerUser {
 
-    void registerUser(RegisterUserRequest request);
+    ResponserUser registerUser(RegisterUserRequest request);
 
 
 }

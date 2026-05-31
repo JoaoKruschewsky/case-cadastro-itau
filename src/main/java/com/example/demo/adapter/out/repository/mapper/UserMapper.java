@@ -17,13 +17,16 @@ public class UserMapper {
                 .bairro(body.address().bairro())
                 .uf(body.address().uf()).build();
 
-        return  User.builder()
+        User newUser = User.builder()
                 .cep(body.cep())
                 .CPF(body.cpf())
+                .nomeCompleto(body.name().trim())
                 .email(body.email())
                 .dataNascimento(LocalDate.parse(body.data_nascimento()))
                 .documento(body.document())
                 .endereco(parseToAddres).build();
+
+        return newUser;
 
     }
 }
