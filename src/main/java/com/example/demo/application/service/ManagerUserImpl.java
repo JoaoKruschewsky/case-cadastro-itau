@@ -27,105 +27,83 @@ public class ManagerUserImpl implements ManagerUser {
     @Override
     public ResponserUser registerUser(RegisterUserRequest body) {
 
-        boolean save = h2Manager.saveUser(body);
+       String login = "";
+       ArrayList<String> cutNames = separatorNames(body.name());
+        login = generatingLogin(cutNames);
+       Boolean ok = h2Manager.saveLogin(login);
+       while (ok.equals(false)) {
+          login = generatingLogin(cutNames);
+          ok = h2Manager.saveLogin(login);
+       }
+
+        boolean save = h2Manager.saveUser(body, login);
 
         if (!save) {
-            new UserException("Aconteceu algum erro ao salvar o usuario", 500);
-        }
-        int space = 0;
-        int beginIndex = 0;
-        String name = "";
-        ArrayList<String> namesSeparate = new ArrayList<>();
-        logger.info(body.name());
-        for (int i = 0; i < body.name().length(); i++){
-            Character letra = body.name().charAt(i);
-            if (letra.equals(' ')) {
-                space = i;
-                System.out.println(space);
-                name = body.name().substring(beginIndex, space);
-                namesSeparate.add(name);
-            }
-            beginIndex = space;
-
-        }
-        String lastName = body.name().substring(space);
-        namesSeparate.add(lastName);
-
-
-        Random random = new Random();
-        StringBuilder generateLogin = new StringBuilder();
-        int countCaughtName = 0;
-        int targetStringLength = 7;
-        String getNameInArray = "";
-        String verifyName = "";
-        for (int n = 0; n < namesSeparate.size(); n++) {
-            countCaughtName++;
-
-            int randomIndexName = random.nextInt(namesSeparate.size());
-            getNameInArray = namesSeparate.get(randomIndexName);
-
-            if (!verifyName.equals(getNameInArray)) {
-                logger.info("Pegando nome no array: " + getNameInArray);
-                generateLogin.append(getNameInArray.substring(0, 4));
-                logger.info("gerando login" + generateLogin);
-            }
-            System.out.println("contagem: " + countCaughtName);
-            if (countCaughtName == 2) {
-                if (generateLogin.length() == 7) {
-                    System.out.println("entrei aq");
-                    break;
-                } else {
-                    System.out.println("entrei aq");
-                    countCaughtName = 0;
-                    continue;
-                }
-            }
-            verifyName = getNameInArray;
-
-
+             throw new UserException("Aconteceu algum erro ao salvar o usuario", 500);
         }
 
-
-
-
-
-
-        System.out.print(generateLogin.length());
-        System.out.println("Login gerado: " + generateLogin.toString().replace(" ", "").toLowerCase());
-
-
-
-
-
-
-
-
-
-
-//        int leftLimit = 97;
-//        int rightLimit = 122;
-//        Random random = new Random();
-//        StringBuilder buffer = new StringBuilder(targetStringLength);
-//        for (int i = 0; i < targetStringLength; i++) {
-//            int randomLimitedInt = leftLimit + (int)
-//                    (random.nextFloat() * (rightLimit - leftLimit + 1));
-//            buffer.append((char) randomLimitedInt);
-//        }
-//        body.name().indexOf()
-//        byte[] array = new byte[7];
-//        new Random().nextBytes(array);
-//        String generatedLogin = new String(array, Charset.forName(body.name()));
-
-
-
-        return new ResponserUser("s");
+        return new ResponserUser(login);
 
     }
 
-    private String generatingLogin (String name) {
+    private String generatingLogin (ArrayList<String> names) {
 
+        Random random = new Random();
+        StringBuilder generateLogin = new StringBuilder(7);
+        int count = 0;
+        String getNameInArray = "";
+        ArrayList<String> namesSelected = new ArrayList<>();
 
+        for (int n  = 0 ; n < names.size(); n++) {
+            count++;
+            getNameInArray = names.get(n);
+            logger.info("Pegando nome no array: " + getNameInArray);
+            generateLogin.append(getNameInArray.substring(0, 3).replace(" ", ""));
+            logger.info("Gerando uma parte do login: {}", generateLogin);
+            logger.info("contagem: " + count);
+            if (generateLogin.length() >= 7 ) {
+                logger.info("entrou no break ");
+                break;
+            }
+            if (count == names.size() ){
+                count = 0;
+                n = 0;
+            }
+        }
 
-        return "";
+        return generateLogin.toString().toLowerCase().substring(0, 7);
+    }
+
+    private ArrayList<String> separatorNames (String name) {
+        int space = 0;
+        int beginIndex = 0;
+        String nameInsert = "";
+        ArrayList<String> namesSeparate = new ArrayList<>();
+
+        logger.info("Name user: {} ", name);
+        logger.info("Name Tamanho: {} ", name.length());
+        for (int i = 0; i < name.length(); i++){
+            logger.info("Entrei no for");
+
+            Character letra = name.charAt(i);
+            if (letra.equals(' ')) {
+                logger.info("entrei no if");
+                space = i;
+                System.out.println("Contagem de espacos: " + space);
+                nameInsert = name.substring(beginIndex, space);
+                logger.info("Nome pra inserir: {}", nameInsert);
+                namesSeparate.add(nameInsert);
+                beginIndex = space + 1;
+            }
+        }
+        logger.info("Sair do for");
+        String lastName = name.substring(space).replace(" ", "");
+        namesSeparate.add(lastName);
+
+        for (String names : namesSeparate){
+            logger.info(names);
+        }
+
+        return namesSeparate;
     }
 }

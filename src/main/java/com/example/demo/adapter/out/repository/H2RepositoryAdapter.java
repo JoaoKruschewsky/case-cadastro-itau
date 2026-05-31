@@ -2,8 +2,6 @@ package com.example.demo.adapter.out.repository;
 
 import com.example.demo.application.exception.UserException;
 import com.example.demo.domain.model.dtos.RegisterUserRequest;
-import com.example.demo.domain.model.entity.Login;
-import com.example.demo.domain.model.entity.User;
 import com.example.demo.domain.ports.out.H2Manager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,19 +13,16 @@ import static com.example.demo.adapter.out.repository.mapper.UserMapper.parseToU
 public class H2RepositoryAdapter implements H2Manager {
 
     private final UserRepository userRepository;
-    private final LoginRepository loginRepository;
 
     @Override
-    public void saveLogin(String login) {
+    public Boolean saveLogin(String login) {
 
-        Login loginBuild = Login.builder().login(login).build();
 
-        userRepository.save(User.builder()
-                .login(loginBuild).build());
+        return true;
     }
 
     @Override
-    public boolean saveUser(RegisterUserRequest user) {
+    public boolean saveUser(RegisterUserRequest user, String login) {
 
        boolean getUser = userRepository.findByEmail(user.email()).isPresent();
 
@@ -35,10 +30,15 @@ public class H2RepositoryAdapter implements H2Manager {
            throw new UserException("Usuario Cadastrato", 401);
         }
 
-        userRepository.save(parseToUser(user));
+        boolean getLogin = userRepository.findByLoginName(login).isPresent();
+        if (getLogin){
+            return false;
+        }
 
+        userRepository.save(parseToUser(user, login));
 
         return true;
 
     }
+
 }

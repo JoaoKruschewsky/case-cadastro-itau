@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public class UserMapper {
 
 
-    public static User parseToUser (RegisterUserRequest body) {
+    public static User parseToUser (RegisterUserRequest body, String login) {
 
         Address parseToAddres = Address.builder()
                 .logradouro(body.address().logradouro())
@@ -24,7 +24,9 @@ public class UserMapper {
                 .email(body.email())
                 .dataNascimento(LocalDate.parse(body.data_nascimento()))
                 .documento(body.document())
+                .loginName(login)
                 .endereco(parseToAddres).build();
+
 
         return newUser;
 
