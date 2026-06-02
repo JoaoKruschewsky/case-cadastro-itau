@@ -15,13 +15,6 @@ public class H2RepositoryAdapter implements H2Manager {
     private final UserRepository userRepository;
 
     @Override
-    public Boolean saveLogin(String login) {
-
-
-        return true;
-    }
-
-    @Override
     public boolean saveUser(RegisterUserRequest user, String login) {
 
        boolean getUser = userRepository.findByEmail(user.email()).isPresent();

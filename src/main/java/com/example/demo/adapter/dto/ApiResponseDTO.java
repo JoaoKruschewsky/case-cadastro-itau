@@ -1,11 +1,13 @@
-package com.example.demo.adapter.in;
+package com.example.demo.adapter.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import tools.jackson.databind.PropertyNamingStrategies;
-import tools.jackson.databind.PropertyNamingStrategy;
 import tools.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
-public class ApiResponseDTO {
+public record ApiResponseDTO<T>(
+        String message,
+        T data
+) {
+
 }

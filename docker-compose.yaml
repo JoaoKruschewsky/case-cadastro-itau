@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - cadastro-net
+    restart: unless-stopped
+
+  h2:
+    image: buildo/h2database
+    container_name: h2db
+    ports:
+      - "8082:8082"
+    environment:
+      - H2DATA=/h2-data
+    volumes:
+      - ./h2-data:/h2-data
+    networks:
+      - cadastro-net
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./case-front
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+    networks:
+      - cadastro-net
+    restart: unless-stopped
+
+networks:
+  cadastro-net:
+    driver: bridge
