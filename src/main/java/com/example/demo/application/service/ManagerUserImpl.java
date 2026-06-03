@@ -34,7 +34,7 @@ public class ManagerUserImpl implements ManagerUser {
        int count = 0;
        while (save.equals(false)) {
            count++;
-          login = generateLoginByFisrtNameAndOtherName(cutNames);
+          login = generateLoginByFisrtNameAndOtherName(cutNames, count);
           save = h2Manager.saveUser(body, login);
           logger.info("Login gerado: {}", login);
 
