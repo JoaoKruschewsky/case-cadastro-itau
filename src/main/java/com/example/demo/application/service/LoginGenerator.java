@@ -69,6 +69,7 @@ public class LoginGenerator {
             logger.info("Gerando login... ");
             logger.info("Adicionando primeiro nome");
             getFisrtName = names.get(0);
+            logger.info("Pegando o primeiro nome: {}", getFisrtName);
             generateLogin.append(getFisrtName.substring(0, 3));
             logger.info("Primeiro nome  adicionado: {} ", generateLogin.toString());
 

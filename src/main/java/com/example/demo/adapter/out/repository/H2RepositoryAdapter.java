@@ -17,20 +17,16 @@ public class H2RepositoryAdapter implements H2Manager {
     @Override
     public boolean saveUser(RegisterUserRequest user, String login) {
 
-       boolean getUser = userRepository.findByEmail(user.email()).isPresent();
-       boolean getUserByCpf = userRepository.findByCPF(user.cpf()).isPresent();
 
-        if (getUser) {
+        if (userRepository.findByEmail(user.email()).isPresent()) {
            throw new UserException("Email Cadastrado", 401);
-        } if (getUserByCpf) {
+        } if (userRepository.findByCPF(user.cpf()).isPresent()) {
            throw new UserException("CPF cadastrado" , 401);
         }
 
-        boolean getLogin = userRepository.findByLoginName(login).isPresent();
-        if (getLogin){
+        if ( userRepository.findByLoginName(login).isPresent()){
             return false;
         }
-
         userRepository.save(parseToUser(user, login));
 
         return true;

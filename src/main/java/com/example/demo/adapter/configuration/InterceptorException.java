@@ -1,11 +1,11 @@
 package com.example.demo.adapter.configuration;
 
+import com.example.demo.application.exception.ApiException;
 import com.example.demo.application.exception.UserException;
+import com.example.demo.application.exception.ValidationDataInputException;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.util.InternalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.properties.bind.validation.ValidationErrors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class InterceptorException {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    private ResponseEntity<ProblemDetail> handlerValidationException(MethodArgumentNotValidException e) {
+    private ResponseEntity<ProblemDetail> handlerArgumentNotValidException(MethodArgumentNotValidException e) {
 
         ProblemDetail serviceResponseError = ProblemDetail.forStatus(401);
         for (FieldError f : e.getBindingResult().getFieldErrors()) {
@@ -42,10 +42,17 @@ public class InterceptorException {
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(serviceResponseError);
     }
-    @ExceptionHandler(InternalException.class)
-    private ResponseEntity<ProblemDetail> handlerException(InternalException e) {
+    @ExceptionHandler(ApiException.class)
+    private ResponseEntity<ProblemDetail> handlerException(ApiException e) {
 
-        ProblemDetail serviceResponseError = ProblemDetail.forStatus(500);
+        ProblemDetail serviceResponseError = ProblemDetail.forStatus(e.getHttpStatus());
+        serviceResponseError.setDetail(e.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(serviceResponseError);
+    }
+    @ExceptionHandler(ValidationDataInputException.class)
+    private ResponseEntity<ProblemDetail> handlerValidationDataInputException(ValidationDataInputException e) {
+
+        ProblemDetail serviceResponseError = ProblemDetail.forStatus(e.getHttpStatus());
         serviceResponseError.setDetail(e.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(serviceResponseError);
     }

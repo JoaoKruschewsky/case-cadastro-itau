@@ -1,20 +1,20 @@
 package com.example.demo.application.service;
 
+import com.example.demo.application.exception.ApiException;
 import com.example.demo.application.exception.UserException;
 import com.example.demo.adapter.dto.RegisterUserRequest;
 import com.example.demo.adapter.dto.ResponserUser;
 import com.example.demo.domain.ports.in.ManagerUser;
 import com.example.demo.domain.ports.out.H2Manager;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.util.InternalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import static com.example.demo.application.service.LoginGenerator.generateLoginByFisrtNameAndLastName;
 import static com.example.demo.application.service.LoginGenerator.generateLoginByFisrtNameAndOtherName;
+import static com.example.demo.application.usecase.ValidationUseCase.validationUser;
 
 @RequiredArgsConstructor
 public class ManagerUserImpl implements ManagerUser {
@@ -27,6 +27,7 @@ public class ManagerUserImpl implements ManagerUser {
     @Override
     public ResponserUser registerUser(RegisterUserRequest body) {
 
+        validationUser(body);
        String login = "";
        ArrayList<String> cutNames = separatorNames(body.name());
        login = generateLoginByFisrtNameAndLastName(cutNames);
@@ -39,7 +40,7 @@ public class ManagerUserImpl implements ManagerUser {
           logger.info("Login gerado: {}", login);
 
           if (count == 10) {
-               throw new InternalException("Ocorreu um erro ao tentar gerar o login");
+               throw new ApiException("Ocorreu um erro ao tentar gerar o login", 500);
           }
 
        }
@@ -47,7 +48,7 @@ public class ManagerUserImpl implements ManagerUser {
        logger.info("Login gerado: {}", login);
 
         if (!save) {
-             throw new UserException("Aconteceu algum erro ao salvar o usuario", 500);
+             throw new UserException("Aconteceu algum erro ao salvar o usuário", 500);
         }
 
         return new ResponserUser(login);
