@@ -36,25 +36,25 @@ public class InterceptorException {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     private ResponseEntity<ProblemDetail> handlerArgumentNotValidException(MethodArgumentNotValidException e) {
 
-        ProblemDetail serviceResponseError = ProblemDetail.forStatus(401);
+        ProblemDetail serviceResponseError = ProblemDetail.forStatus(406);
         for (FieldError f : e.getBindingResult().getFieldErrors()) {
             serviceResponseError.setDetail("Campo: " + f.getField() + "Error: " + f.getDefaultMessage() );
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(serviceResponseError);
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(serviceResponseError);
     }
     @ExceptionHandler(ApiException.class)
     private ResponseEntity<ProblemDetail> handlerException(ApiException e) {
 
         ProblemDetail serviceResponseError = ProblemDetail.forStatus(e.getHttpStatus());
         serviceResponseError.setDetail(e.getMessage());
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(serviceResponseError);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(serviceResponseError);
     }
     @ExceptionHandler(ValidationDataInputException.class)
     private ResponseEntity<ProblemDetail> handlerValidationDataInputException(ValidationDataInputException e) {
 
         ProblemDetail serviceResponseError = ProblemDetail.forStatus(e.getHttpStatus());
         serviceResponseError.setDetail(e.getMessage());
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(serviceResponseError);
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(serviceResponseError);
     }
 
 }

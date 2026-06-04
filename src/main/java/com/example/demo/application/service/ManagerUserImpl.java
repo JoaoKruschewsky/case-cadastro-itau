@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
-import static com.example.demo.application.service.LoginGenerator.generateLoginByFisrtNameAndLastName;
-import static com.example.demo.application.service.LoginGenerator.generateLoginByFisrtNameAndOtherName;
+import static com.example.demo.application.usecase.LoginGeneratorUseCase.generateLoginByFisrtNameAndLastName;
+import static com.example.demo.application.usecase.LoginGeneratorUseCase.generateLoginByFisrtNameAndOtherName;
 import static com.example.demo.application.usecase.ValidationUseCase.validationUser;
 
 @RequiredArgsConstructor

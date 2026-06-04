@@ -5,12 +5,14 @@ import com.example.demo.domain.model.entity.Address;
 import com.example.demo.domain.model.entity.User;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class UserMapper {
 
 
     public static User parseToUser (RegisterUserRequest body, String login) {
-
+        DateTimeFormatter validFormatData = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate parseDate = LocalDate.parse(body.dataNascimento(), validFormatData);
         Address parseToAddres = Address.builder()
                 .logradouro(body.endereco().logradouro())
                 .estado(body.endereco().estado())
@@ -22,7 +24,7 @@ public class UserMapper {
                 .CPF(body.cpf())
                 .nomeCompleto(body.name().trim())
                 .email(body.email())
-                .dataNascimento(LocalDate.parse(body.dataNascimento()))
+                .dataNascimento(parseDate)
                 .loginName(login)
                 .endereco(parseToAddres).build();
 

@@ -1,4 +1,4 @@
-package com.example.demo.application.service;
+package com.example.demo.application.usecase;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,10 +6,10 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class LoginGenerator {
+public class LoginGeneratorUseCase {
 
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginGenerator.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoginGeneratorUseCase.class);
 
 
     public static String generateLoginByFisrtNameAndLastName (ArrayList<String> names) {
@@ -77,7 +77,7 @@ public class LoginGenerator {
                 int sortOtherName = random.nextInt(names.size() - 2) +  1 ;
                 getOtherName = names.get(sortOtherName);
                 logger.info("Nome pego pra substring: {} ", getOtherName);
-                String nameSubstring = getOtherName.substring(0,3);
+                String nameSubstring = getOtherName.substring(0,4);
                 logger.info("Adicionando outro nome: {} ", nameSubstring);
                 generateLogin.append(nameSubstring);
             }

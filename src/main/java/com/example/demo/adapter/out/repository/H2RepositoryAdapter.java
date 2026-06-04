@@ -2,8 +2,11 @@ package com.example.demo.adapter.out.repository;
 
 import com.example.demo.application.exception.UserException;
 import com.example.demo.adapter.dto.RegisterUserRequest;
+import com.example.demo.application.service.ManagerUserImpl;
 import com.example.demo.domain.ports.out.H2Manager;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import static com.example.demo.adapter.out.repository.mapper.UserMapper.parseToUser;
@@ -13,6 +16,7 @@ import static com.example.demo.adapter.out.repository.mapper.UserMapper.parseToU
 public class H2RepositoryAdapter implements H2Manager {
 
     private final UserRepository userRepository;
+    private static final Logger logger = LoggerFactory.getLogger(ManagerUserImpl.class);
 
     @Override
     public boolean saveUser(RegisterUserRequest user, String login) {
@@ -25,6 +29,7 @@ public class H2RepositoryAdapter implements H2Manager {
         }
 
         if ( userRepository.findByLoginName(login).isPresent()){
+            logger.info("Login: {} -> já existe, gerando um novo..." , login);
             return false;
         }
         userRepository.save(parseToUser(user, login));

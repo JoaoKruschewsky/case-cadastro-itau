@@ -5,6 +5,7 @@ import com.example.demo.adapter.dto.RegisterUserRequest;
 import com.example.demo.adapter.dto.ResponserUser;
 import com.example.demo.adapter.dto.ApiResponseDTO;
 import com.example.demo.domain.ports.in.ManagerUser;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class ManagerController {
     private final ManagerUser managerUser;
 
     @PostMapping(path = "register")
-    public ResponseEntity<ApiResponseDTO> registerUser(@RequestBody RegisterUserRequest request){
+    public ResponseEntity<ApiResponseDTO> registerUser(@RequestBody @Valid RegisterUserRequest request){
 
         return ResponseEntity.ok(parseToApiResponseSuccess(managerUser.registerUser(request)));
     }
