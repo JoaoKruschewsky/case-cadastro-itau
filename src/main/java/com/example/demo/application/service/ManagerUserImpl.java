@@ -5,7 +5,7 @@ import com.example.demo.application.exception.ApiException;
 import com.example.demo.application.exception.UserException;
 import com.example.demo.adapter.dto.RegisterUserRequest;
 import com.example.demo.adapter.dto.ResponseLoginUser;
-import com.example.demo.domain.model.entity.User;
+import com.example.demo.domain.model.User;
 import com.example.demo.domain.ports.in.ManagerUser;
 import com.example.demo.domain.ports.out.H2Manager;
 import lombok.RequiredArgsConstructor;
