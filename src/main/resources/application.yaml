@@ -2,10 +2,10 @@ spring:
   application:
     name: case-cadastro
   datasource:
-    url: jdbc:h2:file:./data/testdb
+    url: ${DB_URL}
     driver-class-name: org.h2.Driver
-    username: admin
-    password: 123
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   jpa:
     defer-datasource-initialization: true
     hibernate:
