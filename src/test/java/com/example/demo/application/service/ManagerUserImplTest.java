@@ -1,6 +1,6 @@
 package com.example.demo.application.service;
 
-import com.example.demo.adapter.dto.ResponserUser;
+import com.example.demo.adapter.dto.ResponseLoginUser;
 import com.example.demo.domain.ports.out.H2Manager;
 import org.apache.logging.log4j.util.InternalException;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ class ManagerUserImplTest {
     void registerWithSuccess() {
         when(h2Manager.saveUser(any(), anyString())).thenReturn(true);
 
-        ResponserUser service = managerUser.registerUser(buildRequest("Joao Pedro Silva"));
+        ResponseLoginUser service = managerUser.registerUser(buildRequest("Joao Pedro Silva"));
 
         assertNotNull(service);
         assertNotNull(service.loginResponse());
@@ -39,7 +39,7 @@ class ManagerUserImplTest {
     void mustGenerateLoginCaseLetters () {
         when(h2Manager.saveUser(any(), anyString())).thenReturn(true);
 
-        ResponserUser response = managerUser.registerUser(buildRequest("Maria Silva"));
+        ResponseLoginUser response = managerUser.registerUser(buildRequest("Maria Silva"));
 
         assertTrue(response.loginResponse().matches("[a-z]{7}"));
     }
@@ -50,7 +50,7 @@ class ManagerUserImplTest {
                 .thenReturn(false)
                 .thenReturn(true);
 
-        ResponserUser response = managerUser.registerUser(buildRequest("Maria Silva"));
+        ResponseLoginUser response = managerUser.registerUser(buildRequest("Maria Silva"));
 
         assertNotNull(response);
     }
@@ -68,7 +68,7 @@ class ManagerUserImplTest {
     void separateCompoundNameCorrectly() {
         when(h2Manager.saveUser(any(), anyString())).thenReturn(true);
 
-        ResponserUser response = managerUser.registerUser(buildRequest("Joao Pedro Lima"));
+        ResponseLoginUser response = managerUser.registerUser(buildRequest("Joao Pedro Lima"));
 
         assertNotNull(response);
         assertEquals(7, response.loginResponse().length());
@@ -78,7 +78,7 @@ class ManagerUserImplTest {
     void generateLoginWithFirstNameANDTwoLastNames() {
         when(h2Manager.saveUser(any(), anyString())).thenReturn(true);
 
-        ResponserUser response = managerUser.registerUser(buildRequest("Ana Paula Souza"));
+        ResponseLoginUser response = managerUser.registerUser(buildRequest("Ana Paula Souza"));
 
         assertNotNull(response);
         assertTrue(response.loginResponse().matches("[a-z]{7}"));

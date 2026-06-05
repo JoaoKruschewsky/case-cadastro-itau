@@ -13,4 +13,13 @@ public class ApiResponseMapper {
         );
 
     }
+
+    public static <T> ApiResponseDTO<T> parseToApiLoginResponseSuccess(T body) {
+
+        return new ApiResponseDTO<>(
+                "Usuario cadastrado!",
+                body
+        );
+
+    }
 }

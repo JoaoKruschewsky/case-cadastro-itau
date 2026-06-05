@@ -2,14 +2,15 @@ package com.example.demo.adapter.in;
 
 
 import com.example.demo.adapter.dto.RegisterUserRequest;
-import com.example.demo.adapter.dto.ResponserUser;
 import com.example.demo.adapter.dto.ApiResponseDTO;
+import com.example.demo.adapter.dto.RequestLogin;
 import com.example.demo.domain.ports.in.ManagerUser;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.example.demo.adapter.in.mapper.ApiResponseMapper.parseToApiLoginResponseSuccess;
 import static com.example.demo.adapter.in.mapper.ApiResponseMapper.parseToApiResponseSuccess;
 
 @RestController
@@ -24,5 +25,10 @@ public class ManagerController {
     public ResponseEntity<ApiResponseDTO> registerUser(@RequestBody @Valid RegisterUserRequest request){
 
         return ResponseEntity.ok(parseToApiResponseSuccess(managerUser.registerUser(request)));
+    }
+    @GetMapping(path = "login/{login}")
+    public ResponseEntity<ApiResponseDTO> loginUser(@PathVariable @Valid RequestLogin login){
+
+        return ResponseEntity.ok(parseToApiLoginResponseSuccess(managerUser.getUser(login.login())));
     }
 }

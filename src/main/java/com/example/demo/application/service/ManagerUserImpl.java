@@ -1,9 +1,11 @@
 package com.example.demo.application.service;
 
+import com.example.demo.adapter.dto.ResponseUser;
 import com.example.demo.application.exception.ApiException;
 import com.example.demo.application.exception.UserException;
 import com.example.demo.adapter.dto.RegisterUserRequest;
-import com.example.demo.adapter.dto.ResponserUser;
+import com.example.demo.adapter.dto.ResponseLoginUser;
+import com.example.demo.domain.model.entity.User;
 import com.example.demo.domain.ports.in.ManagerUser;
 import com.example.demo.domain.ports.out.H2Manager;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +27,16 @@ public class ManagerUserImpl implements ManagerUser {
     private final H2Manager h2Manager;
 
     @Override
-    public ResponserUser registerUser(RegisterUserRequest body) {
+    public ResponseUser getUser(String login) {
+        User getUser = h2Manager.getUser(login);
+        return new ResponseUser(
+                getUser.getNomeCompleto(),
+                getUser.getLoginName()
+        );
+    }
+
+    @Override
+    public ResponseLoginUser registerUser(RegisterUserRequest body) {
 
         validationUser(body);
        String login = "";
@@ -51,7 +62,7 @@ public class ManagerUserImpl implements ManagerUser {
              throw new UserException("Aconteceu algum erro ao salvar o usuário", 500);
         }
 
-        return new ResponserUser(login);
+        return new ResponseLoginUser(login);
 
     }
 
