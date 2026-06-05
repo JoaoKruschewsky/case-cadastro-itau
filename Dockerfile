@@ -1,8 +1,8 @@
 FROM gradle:9.3.1-jdk21-alpine
-WORKDIR /app
+WORKDIR .
 COPY . .
 RUN gradle build -x test && \
-    cp build/libs/*.jar app.jar
+    cp build/libs/*SNAPSHOT.jar app.jar
 EXPOSE 8080
 
 ENTRYPOINT ["java","-jar","app.jar"]
