@@ -38,8 +38,19 @@ public class InterceptorException {
 
         ProblemDetail serviceResponseError = ProblemDetail.forStatus(406);
         for (FieldError f : e.getBindingResult().getFieldErrors()) {
-            serviceResponseError.setDetail("Campo: " + f.getField() + "Error: " + f.getDefaultMessage() );
+            if (f.getField().contains("email")) {
+                serviceResponseError.setDetail("Email inválido" );
+                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(serviceResponseError);
+
+            }
+            if (f.getField().contains("cpf")) {
+                serviceResponseError.setDetail("CPF inválido" );
+                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(serviceResponseError);
+
+            }
+            serviceResponseError.setDetail("Campo: " + f.getField() + " Error: " + f.getDefaultMessage() );
         }
+
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(serviceResponseError);
     }
     @ExceptionHandler(ApiException.class)
