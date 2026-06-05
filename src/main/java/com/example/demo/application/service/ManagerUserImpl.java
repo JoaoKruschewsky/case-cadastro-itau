@@ -9,6 +9,7 @@ import com.example.demo.domain.model.User;
 import com.example.demo.domain.ports.in.ManagerUser;
 import com.example.demo.domain.ports.out.H2Manager;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.query.criteria.JpaOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,11 +76,10 @@ public class ManagerUserImpl implements ManagerUser {
         logger.info("Name user: {} ", name);
         logger.info("Name Tamanho: {} ", name.length());
         for (int i = 0; i < name.length(); i++){
-
             Character letra = name.charAt(i);
             if (letra.equals(' ')) {
                 space = i;
-                System.out.println("Contagem de espacos: " + space);
+                System.out.println("Index do espaco: " + space);
                 nameInsert = name.substring(beginIndex, space);
                 logger.info("Nome pra inserir: {}", nameInsert);
                 namesSeparate.add(nameInsert);
