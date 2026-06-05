@@ -10,7 +10,7 @@ import tools.jackson.databind.PropertyNamingStrategies;
 import tools.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
-public record RegisterUserRequest(@NotBlank String name, @NotBlank  @CPF String cpf, @NotBlank @Email String email, @NotBlank String dataNascimento, @NotBlank @Length(max = 11, message = "Cep precisa ter 8 caracteres") String cep,
+public record RegisterUserRequest(@NotBlank String name, @NotBlank  @CPF String cpf, @NotBlank @Email String email, @NotBlank String dataNascimento, @NotBlank @Length(max = 8, message = "Cep precisa ter 8 caracteres") String cep,
                                    AddressDTO endereco) {
 
 }

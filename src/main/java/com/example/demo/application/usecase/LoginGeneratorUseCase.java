@@ -71,8 +71,7 @@ public class LoginGeneratorUseCase {
             getFisrtName = names.get(0);
             logger.info("Pegando o primeiro nome: {}", getFisrtName);
             generateLogin.append(getFisrtName.substring(0, 3));
-            logger.info("Primeiro nome  adicionado: {} ", generateLogin.toString());
-
+            logger.info("Primeiro nome  adicionado: {} ", generateLogin);
             for (int i = 1; i < names.size() - 1; i++) {
                 int sortOtherName = random.nextInt(names.size() - 2) +  1 ;
                 getOtherName = names.get(sortOtherName);

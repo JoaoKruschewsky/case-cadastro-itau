@@ -15,7 +15,7 @@ public class ValidationUseCase {
     public static void validationUser (RegisterUserRequest body) {
 
         validationDateValid(body.dataNascimento());
-        validationDateToday(body.dataNascimento());
+        validationDateNoFuture(body.dataNascimento());
         hasSpecialCaracteres(body.name());
 
     }
@@ -29,7 +29,7 @@ public class ValidationUseCase {
         }
     }
 
-    private static void validationDateToday(String date) {
+    private static void validationDateNoFuture(String date) {
         DateTimeFormatter validFormatData = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate parseToDate = LocalDate.parse(date, validFormatData);
         LocalDate today = LocalDate.now();
