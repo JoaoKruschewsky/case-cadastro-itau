@@ -1,29 +1,35 @@
 package com.example.demo.adapter.out.repository.mapper;
 
-import com.example.demo.domain.model.dtos.RegisterUserRequest;
+import com.example.demo.adapter.dto.RegisterUserRequest;
 import com.example.demo.domain.model.entity.Address;
 import com.example.demo.domain.model.entity.User;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class UserMapper {
 
 
-    public static User parseToUser (RegisterUserRequest body) {
-
+    public static User parseToUser (RegisterUserRequest body, String login) {
+        DateTimeFormatter validFormatData = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate parseDate = LocalDate.parse(body.dataNascimento(), validFormatData);
         Address parseToAddres = Address.builder()
-                .logradouro(body.address().logradouro())
-                .estado(body.address().estado())
-                .bairro(body.address().bairro())
-                .uf(body.address().uf()).build();
+                .logradouro(body.endereco().logradouro())
+                .estado(body.endereco().estado())
+                .bairro(body.endereco().bairro())
+                .uf(body.endereco().uf()).build();
 
-        return  User.builder()
+        User newUser = User.builder()
                 .cep(body.cep())
                 .CPF(body.cpf())
+                .nomeCompleto(body.name().trim())
                 .email(body.email())
-                .dataNascimento(LocalDate.parse(body.data_nascimento()))
-                .documento(body.document())
+                .dataNascimento(parseDate)
+                .loginName(login)
                 .endereco(parseToAddres).build();
+
+
+        return newUser;
 
     }
 }

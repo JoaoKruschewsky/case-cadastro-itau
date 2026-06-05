@@ -1,26 +1,34 @@
 package com.example.demo.adapter.in;
 
 
-import com.example.demo.domain.model.dtos.RegisterUserRequest;
+import com.example.demo.adapter.dto.RegisterUserRequest;
+import com.example.demo.adapter.dto.ApiResponseDTO;
+import com.example.demo.adapter.dto.RequestLogin;
 import com.example.demo.domain.ports.in.ManagerUser;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import static com.example.demo.adapter.in.mapper.ApiResponseMapper.parseToApiLoginResponseSuccess;
+import static com.example.demo.adapter.in.mapper.ApiResponseMapper.parseToApiResponseSuccess;
 
 @RestController
 @RequestMapping("manager-controller/v1/manager")
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class ManagerController {
 
     private final ManagerUser managerUser;
 
     @PostMapping(path = "register")
-    public ResponseEntity<?> registerUser(@RequestBody RegisterUserRequest request){
-        managerUser.registerUser(request);
+    public ResponseEntity<ApiResponseDTO> registerUser(@RequestBody @Valid RegisterUserRequest request){
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(parseToApiResponseSuccess(managerUser.registerUser(request)));
+    }
+    @GetMapping(path = "login/{login}")
+    public ResponseEntity<ApiResponseDTO> loginUser(@PathVariable @Valid RequestLogin login){
+
+        return ResponseEntity.ok(parseToApiLoginResponseSuccess(managerUser.getUser(login.login())));
     }
 }

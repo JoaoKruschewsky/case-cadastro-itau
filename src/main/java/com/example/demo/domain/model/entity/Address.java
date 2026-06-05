@@ -7,14 +7,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+
 @Builder
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
 public class Address {
 
-    @Column(name = "logradoura")
+    @Column(name = "logradouro")
     private String logradouro;
     @Column(name = "bairro")
     private String bairro;

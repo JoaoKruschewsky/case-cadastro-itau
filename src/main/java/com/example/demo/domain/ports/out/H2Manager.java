@@ -1,9 +1,11 @@
 package com.example.demo.domain.ports.out;
 
-import com.example.demo.domain.model.dtos.RegisterUserRequest;
+import com.example.demo.adapter.dto.RegisterUserRequest;
+import com.example.demo.adapter.dto.ResponseUser;
+import com.example.demo.domain.model.entity.User;
 
 public interface H2Manager {
 
-    boolean saveUser(RegisterUserRequest user);
-    void saveLogin(String login);
+    boolean saveUser(RegisterUserRequest user, String login);
+    User getUser(String login);
 }
