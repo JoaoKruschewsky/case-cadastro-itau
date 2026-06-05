@@ -48,9 +48,9 @@ Serviços disponíveis após subida:
 | H2 Console | http://localhost:8080/h2-console |
 
 Credenciais H2 Console:
-- JDBC URL: `jdbc:h2:file:./data/testdb`
-- Usuário: `admin`
-- Senha: `123`
+- JDBC URL: PRECISA COLOCAR EM .ENV OU NO APPLICATION.YAML HARDCODED
+- Usuário: PRECISA COLOCAR EM .ENV OU NO APPLICATION.YAML HARDCODED
+- Senha: `PRECISA COLOCAR EM .ENV OU NO APPLICATION.YAML HARDCODED
 
 ---
 
@@ -71,9 +71,6 @@ cd case-front
 npm install
 ng serve
 ```
-
-O front sobe em `http://localhost:4200`. O `proxy.conf.json` já redireciona `/manager-controller` para `http://localhost:8080`.
-
 ---
 
 ## Endpoints da API
@@ -146,18 +143,6 @@ GET /manager-controller/v1/manager/login/marsouz
 
 ---
 
-## Fluxo da aplicação
-
-```
-[Cadastro] → preenche formulário → POST /register → login gerado
-          → modal exibe o login → após 10s → redireciona para /profile
-
-[Login]    → informa o login → GET /login/{login} → recebe nome e login
-          → redireciona para /profile exibindo nome e login
-```
-
----
-
 ## Páginas do front-end
 
 | Rota        | Componente  | Descrição                              |
@@ -169,20 +154,6 @@ GET /manager-controller/v1/manager/login/marsouz
 
 ---
 
-## Rodando os testes
-
-```bash
-./gradlew test
-```
-
-Testes unitários em:
-- `src/test/java/com/example/demo/application/service/ManagerUserImplTest.java`
-- `src/test/java/com/example/demo/helpers/HelpersTest.java`
-
-Relatório HTML após execução:
-```
-build/reports/tests/test/index.html
-```
 
 ---
 
