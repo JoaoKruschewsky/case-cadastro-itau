@@ -1,5 +1,5 @@
 FROM gradle:9.3.1-jdk21-alpine
-WORKDIR .
+WORKDIR /app
 COPY . .
 RUN gradle build -x test && \
     cp build/libs/*.jar app.jar
